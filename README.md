@@ -9,7 +9,7 @@ Create and activate a <a href="https://fastapi.tiangolo.com/virtual-environments
 <div class="termy">
 
 ```console
-$ pip install "fastapi[standard]"
+$ pip install "fastapi[standard]" sqlalchemy psycopg2-binary pydantic-settings
 
 ---> 100%
 ```
