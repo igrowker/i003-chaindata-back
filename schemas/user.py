@@ -3,6 +3,15 @@ from pydantic import BaseModel, EmailStr
 
 class UserResponse(BaseModel):
     user_id: int | None = None
+    first_name: str | None = None
+    last_name: str | None = None
+    email: EmailStr | None = None
+    password: str | None = None
+
+    class Config:
+        orm_mode = True
+
+class UserCreate(BaseModel):
     first_name: str
     last_name: str
     email: EmailStr
@@ -10,12 +19,11 @@ class UserResponse(BaseModel):
 
     class Config:
         orm_mode = True
-        
-class UserRequest(BaseModel):
-    first_name: str
-    last_name: str
-    email: EmailStr
-    password: str
+
+class UserUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    password: str | None = None
 
     class Config:
         orm_mode = True
