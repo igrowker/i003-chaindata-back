@@ -1,14 +1,27 @@
-from typing import Union
+# application runner
 from fastapi import FastAPI
+from starlette.responses import RedirectResponse
+from database.session import engine
+from routers.user import userRouter
+from models import user
+from const import OPEN_API_TITLE, OPEN_API_DESCRIPTION, VERSION
 
-app = FastAPI()
+user.Base.metadata.create_all(bind=engine)
 
+app = FastAPI(
+    title=OPEN_API_TITLE,
+    description=OPEN_API_DESCRIPTION,
+    version=VERSION,
+    swagger_ui_parameters={"defaultModelsExpandDepth": -1},
+)
 
+app.include_router(userRouter)
+
+# Redirect / -> Swagger-UI documentation
 @app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+def main_function():
+    """
+    # Redirect
+    to documentation (`/docs/`).
+    """
+    return RedirectResponse(url="/docs/")
